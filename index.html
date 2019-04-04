@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		.center {
+			position: relative;
+			background-color: #ccc;
+			width: 700px;
+			margin: 50px auto;
+			padding-bottom: 10px;
+		}
+
+		#input {
+			height: 100px;
+			width: 70%;
+			font-size: 24px;
+			background-color: #bbf;
+			color: black;
+			box-sizing: border-box;
+			text-align: center;
+		}
+		
+		#inp {
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 30%;
+			height: 100px;
+			box-sizing: border-box;
+		}
+
+		p {
+			margin: 10px;
+			font-size: 26px;
+		}
+	</style>
+</head>
+<body>
+	<div class="center">
+		<input type="text" id="input">
+		<button id="inp">Ввод</button>
+		<p id="output"></p>
+	</div>
+	<script type="text/javascript">
+		inp.onclick = function() {
+			var text = document.getElementById('input').value;
+			var outputText = [];
+			var tmp = '', j = 0;
+			for (var i = 0; i < text.length; i++) {
+				if (text[i] == ' ') continue;
+				if (text[i] >= '0' && text[i] <= '9' || text[i] == '.') tmp += text[i];
+				if (text[i] == '+' || text[i] == '-' || text[i] == '*' || text[i] == '/' || text[i] == '(' || text[i] == ')') {
+					if (tmp != '') {
+						outputText[j] = tmp;
+						j++;
+					}
+					tmp = '';
+					outputText[j] = text[i];
+					j++;
+				}
+			}
+			if (tmp != '') outputText[j] = tmp;
+			var out = document.getElementById('output');
+			out.innerHTML = 'Парсер:<br>';
+			for (var  i = 0; i < outputText.length; i++) {
+				out.innerHTML += i + ' | ' + outputText[i] + '<br>';
+			}
+		}
+	</script>
+</body>
+</html>
