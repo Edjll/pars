@@ -3,39 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
-	<style type="text/css">
-		.center {
-			position: relative;
-			background-color: #ccc;
-			width: 700px;
-			margin: 50px auto;
-			padding-bottom: 10px;
-		}
-
-		#input {
-			height: 100px;
-			width: 70%;
-			font-size: 24px;
-			background-color: #bbf;
-			color: black;
-			box-sizing: border-box;
-			text-align: center;
-		}
-		
-		#inp {
-			position: absolute;
-			top: 0;
-			right: 0;
-			width: 30%;
-			height: 100px;
-			box-sizing: border-box;
-		}
-
-		p {
-			margin: 10px;
-			font-size: 26px;
-		}
-	</style>
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
 	<div class="center">
@@ -44,14 +12,14 @@
 		<p id="output"></p>
 	</div>
 	<script type="text/javascript">
-		inp.onclick = function() {
-			var text = document.getElementById('input').value;
+
+		function pars(text) {
 			var outputText = [];
 			var tmp = '', j = 0;
 			for (var i = 0; i < text.length; i++) {
 				if (text[i] == ' ') continue;
 				if (text[i] >= '0' && text[i] <= '9' || text[i] == '.') tmp += text[i];
-				if (text[i] == '+' || text[i] == '-' || text[i] == '*' || text[i] == '/' || text[i] == '(' || text[i] == ')') {
+				if (text[i] == '+' || text[i] == '-' || text[i] == '*' || text[i] == '/' || text[i] == '(' || text[i] == ')' || text[i] == '^') {
 					if (tmp != '') {
 						outputText[j] = tmp;
 						j++;
@@ -62,12 +30,105 @@
 				}
 			}
 			if (tmp != '') outputText[j] = tmp;
-			var out = document.getElementById('output');
+			/*var out = document.getElementById('output');
 			out.innerHTML = 'Парсер:<br>';
 			for (var  i = 0; i < outputText.length; i++) {
 				out.innerHTML += i + ' | ' + outputText[i] + '<br>';
+			}*/
+			return outputText;
+		}
+
+		function symb(op) {
+			switch (op) {
+				case '(':
+					return 0;
+
+				case '+':
+					return 1;
+
+				case '-':
+					return 1;
+
+				case '*':
+					return 2;
+
+				case '/':
+					return 2;
+
+				case '^':
+					return 3;
 			}
 		}
+
+		function exec(op, a1, a2) {
+			switch (op) {
+				case '+':
+					return parseInt(a1 + a2, 10);
+
+				case '-':
+					return parseInt(a2 - a1, 10);
+
+				case '*':
+					return parseInt(a1 * a2, 10);
+
+				case '/':
+					return parseInt(a2 / a1, 10);
+
+				case '^':
+					var res = 1;
+					for (var i = 0; i < a1; i++) res *= a2;
+					return parseInt(res, 10);
+			}
+		}
+
+		inp.onclick = function calc() {
+			var text = document.getElementById('input').value;
+			var lex = pars(text);
+			var stk1 = [];
+			var stk2 = [];
+			for (var i = 0; i < lex.length; i++) {
+				console.log(stk1, stk2);
+				if (lex[i] == ')') {
+					while (stk2[stk2.length - 1] != '(') {
+						var tmp = exec(stk2[stk2.length - 1], stk1[stk1.length - 1], stk1[stk1.length - 2]);
+						stk1.pop();
+						stk1.pop();
+						stk1.push(tmp);
+						stk2.pop();
+					}
+					stk2.pop();
+					continue;
+				}
+				if (lex[i] == '+' || lex[i] == '-' || lex[i] == '*' || lex[i] == '/' || lex[i] == '(' || lex[i] == '^') {
+					if (stk2.length == 0 || symb(stk2[stk2.length - 1]) < symb(lex[i]) || lex[i] == '(') {
+						stk2.push(lex[i]);
+					} else {
+						while (stk2.length) {
+							var tmp = exec(stk2[stk2.length - 1], stk1[stk1.length - 1], stk1[stk1.length - 2]);
+							stk1.pop();
+							stk1.pop();
+							stk1.push(tmp);
+							stk2.pop();
+						}
+						stk2.push(lex[i]);
+					}
+					continue;
+				}
+				stk1.push(parseInt(lex[i], 10));
+			}
+			while (stk2.length) {
+				console.log(stk1, stk2);
+				var tmp = exec(stk2[stk2.length - 1], stk1[stk1.length - 1], stk1[stk1.length - 2]);
+				stk1.pop();
+				stk1.pop();
+				stk1.push(tmp);
+				stk2.pop();
+				console.log(stk1, stk2);
+			}
+			var out = document.getElementById('output');
+			out.innerHTML = stk1[0];
+		}
+
 	</script>
 </body>
 </html>

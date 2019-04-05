@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script');
+
+* {
+	outline: none;
+}
+
+.center {
+	position: relative;
+	width: 700px;
+	margin: 50px auto;
+	padding-bottom: 10px;
+}
+
+#input {
+	font-family: 'Dancing Script', cursive;
+	height: 100px;
+	width: 70%;
+	font-size: 24px;
+	border-width: 0;
+	border-top-left-radius: 20px;
+	background-color: #aaf;
+	color: black;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+#input:hover, #input:focus {
+	box-shadow: 3px -3px #ccf, -3px -3px #ccf, -3px 3px #ccf, 3px 3px #ccf;
+}
+
+#inp {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 30%;
+	height: 100px;
+	color: white;
+	font-size: 26px;
+	font-family: 'Dancing Script', cursive;
+	border-top-right-radius: 20px;
+	background-color: #77f;
+	border-width: 0;
+	box-sizing: border-box;
+}
+
+#inp:hover, #inp:focus {
+	box-shadow: 3px -3px #99f, -3px -3px #99f, -3px 3px #99f, 3px 3px #99f;
+}
+
+p {
+	font-family: 'Dancing Script', cursive;
+	margin-top: 0;
+	padding: 10px 10px 10px 30px;
+	font-size: 26px;
+	background-color: #ddf;
+	border-bottom-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+}
