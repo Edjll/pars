@@ -63,21 +63,21 @@
 		function exec(op, a1, a2) {
 			switch (op) {
 				case '+':
-					return parseInt(a1 + a2, 10);
+					return parseFloat(a1 + a2, 10);
 
 				case '-':
-					return parseInt(a2 - a1, 10);
+					return parseFloat(a2 - a1, 10);
 
 				case '*':
-					return parseInt(a1 * a2, 10);
+					return parseFloat(a1 * a2, 10);
 
 				case '/':
-					return parseInt(a2 / a1, 10);
+					return parseFloat(a2 / a1, 10);
 
 				case '^':
 					var res = 1;
 					for (var i = 0; i < a1; i++) res *= a2;
-					return parseInt(res, 10);
+					return parseFloat(res, 10);
 			}
 		}
 
@@ -114,7 +114,7 @@
 					}
 					continue;
 				}
-				stk1.push(parseInt(lex[i], 10));
+				stk1.push(parseFloat(lex[i], 10));
 			}
 			while (stk2.length) {
 				console.log(stk1, stk2);
